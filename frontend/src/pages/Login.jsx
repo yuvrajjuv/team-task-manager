@@ -2,6 +2,9 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+// 🔥 backend URL (env se lena best practice hai)
+const API = import.meta.env.VITE_API_URL;
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,24 +15,25 @@ function Login() {
     e.preventDefault();
 
     try {
-      const res = await axios.post(
-        "https://team-task-manager-6k3n.onrender.com/api/auth/login",
-        {
-          email,
-          password,
-        }
-      );
+      const res = await axios.post(`${API}/api/auth/login`, {
+        email,
+        password,
+      });
 
       alert("Login Successful ✅");
 
-      // token save
+      // save token + user
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
       navigate("/dashboard");
     } catch (err) {
-      console.log(err);
-      alert("Login failed ❌");
+      console.error(err);
+
+      // better error message
+      alert(
+        err?.response?.data?.message || "Login failed ❌"
+      );
     }
   };
 
