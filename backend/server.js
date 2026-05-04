@@ -4,17 +4,19 @@ const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
+
+// ================= MIDDLEWARE =================
 app.use(express.json());
 app.use(cors());
 
 // ================= DB CONNECT =================
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected"))
+  .then(() => console.log("MongoDB Connected ✅"))
   .catch(err => console.log(err));
 
 // ================= MODELS =================
 
-// USER
+// USER MODEL
 const User = mongoose.model("User", new mongoose.Schema({
   name: String,
   email: String,
@@ -26,7 +28,7 @@ const User = mongoose.model("User", new mongoose.Schema({
   }
 }));
 
-// TASK
+// TASK MODEL
 const Task = mongoose.model("Task", new mongoose.Schema({
   title: String,
   description: String,
@@ -41,30 +43,60 @@ const Task = mongoose.model("Task", new mongoose.Schema({
   }
 }));
 
-// ================= AUTH =================
+// ================= AUTH ROUTES =================
 
+// SIGNUP
 app.post("/api/auth/signup", async (req, res) => {
   const { name, email, password, role } = req.body;
 
-  const exist = await User.findOne({ email });
-  if (exist) return res.status(400).json({ msg: "User already exists" });
+  try {
+    const exist = await User.findOne({ email });
 
-  const user = new User({ name, email, password, role });
-  await user.save();
+    if (exist) {
+      return res.status(400).json({ msg: "User already exists" });
+    }
 
-  res.json({ msg: "Signup success" });
+    const user = new User({ name, email, password, role });
+    await user.save();
+
+    res.json({ msg: "Signup successful ✅" });
+
+  } catch (err) {
+    res.status(500).json({ msg: "Server error" });
+  }
 });
 
+// LOGIN
 app.post("/api/auth/login", async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({ email, password });
-  if (!user) return res.status(400).json({ msg: "Invalid credentials" });
+  try {
+    const user = await User.findOne({ email, password });
 
-  res.json({
-    token: "dummy-token",
-    user
-  });
+    if (!user) {
+      return res.status(400).json({ msg: "Invalid credentials ❌" });
+    }
+
+    res.json({
+      token: "dummy-token",
+      user
+    });
+
+  } catch (err) {
+    res.status(500).json({ msg: "Server error" });
+  }
+});
+
+// ================= USERS ROUTE =================
+
+// 🔥 NEW (IMPORTANT)
+app.get("/api/users", async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ msg: "Error fetching users" });
+  }
 });
 
 // ================= TASK ROUTES =================
@@ -73,30 +105,47 @@ app.post("/api/auth/login", async (req, res) => {
 app.post("/api/tasks", async (req, res) => {
   const { title, description, assignedTo } = req.body;
 
-  const task = new Task({ title, description, assignedTo });
-  await task.save();
+  try {
+    const task = new Task({ title, description, assignedTo });
+    await task.save();
 
-  res.json(task);
+    res.json(task);
+
+  } catch (err) {
+    res.status(500).json({ msg: "Error creating task" });
+  }
 });
 
-// GET TASKS (USER)
+// GET TASKS FOR USER
 app.get("/api/tasks/:userId", async (req, res) => {
-  const tasks = await Task.find({ assignedTo: req.params.userId });
-  res.json(tasks);
+  try {
+    const tasks = await Task.find({ assignedTo: req.params.userId });
+    res.json(tasks);
+
+  } catch (err) {
+    res.status(500).json({ msg: "Error fetching tasks" });
+  }
 });
 
 // UPDATE TASK STATUS
 app.put("/api/tasks/:id", async (req, res) => {
   const { status } = req.body;
 
-  const task = await Task.findByIdAndUpdate(
-    req.params.id,
-    { status },
-    { new: true }
-  );
+  try {
+    const task = await Task.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
 
-  res.json(task);
+    res.json(task);
+
+  } catch (err) {
+    res.status(500).json({ msg: "Error updating task" });
+  }
 });
 
-// ================= START SERVER =================
-app.listen(5000, () => console.log("Server running on 5000"));
+// ================= SERVER =================
+app.listen(5000, () => {
+  console.log("Server running on port 5000 🚀");
+});
