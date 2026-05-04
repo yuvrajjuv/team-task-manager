@@ -2,7 +2,6 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-// 🔥 backend URL (env se lena best practice hai)
 const API = import.meta.env.VITE_API_URL;
 
 function Login() {
@@ -22,18 +21,13 @@ function Login() {
 
       alert("Login Successful ✅");
 
-      // save token + user
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
       navigate("/dashboard");
     } catch (err) {
       console.error(err);
-
-      // better error message
-      alert(
-        err?.response?.data?.message || "Login failed ❌"
-      );
+      alert(err?.response?.data?.message || "Login failed ❌");
     }
   };
 
