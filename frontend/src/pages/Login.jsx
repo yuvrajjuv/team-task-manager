@@ -2,8 +2,6 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const API = import.meta.env.VITE_API_URL;
-
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,20 +12,23 @@ function Login() {
     e.preventDefault();
 
     try {
-      const res = await axios.post(`${API}/api/auth/login`, {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/auth/login`,
+        {
+          email,
+          password,
+        }
+      );
 
       alert("Login Successful ✅");
 
+      // save data
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
       navigate("/dashboard");
     } catch (err) {
-      console.error(err);
-      alert(err?.response?.data?.message || "Login failed ❌");
+      alert(err.response?.data?.message || "Login failed ❌");
     }
   };
 
@@ -54,6 +55,11 @@ function Login() {
 
         <button type="submit">Login</button>
       </form>
+
+      <br />
+      <p>
+        Don't have an account? <a href="/signup">Signup</a>
+      </p>
     </div>
   );
 }
