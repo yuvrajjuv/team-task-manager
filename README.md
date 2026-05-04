@@ -1,122 +1,103 @@
-🚀 Team Task Manager
+🚀 Team Task Manager (Full Stack)
 
-A full-stack web application for managing projects and tasks with secure authentication.
+🌐 Live Application
+
+👉 https://team-task-manager-puce-five.vercel.app
+
+💻 GitHub Repository
+
+👉 https://github.com/yuvrajjuv/team-task-manager
 
 ---
 
-📌 Overview
+📌 Project Overview
 
-Team Task Manager is a MERN Stack application that allows users to manage their projects and tasks efficiently.
+Team Task Manager ek full-stack web application hai jahan users:
 
-It includes:
+- Projects manage kar sakte hain 🗂️
+- Tasks assign kar sakte hain 📋
+- Progress track kar sakte hain 📊
 
-- 🔐 Secure authentication using JWT
-- 📁 Project management system
-- 📝 Task tracking inside projects
-- 🚫 Protected routes for authorized access
-- 👤 Personalized dashboard
+App role-based access follow karta hai:
+
+- 👨‍💼 Admin → Task create & assign
+- 👨‍💻 Member → Assigned tasks dekh & update
+
+---
+
+✨ Features
+
+🔐 Authentication
+
+- Signup (Admin / Member)
+- Login system
+- User session using localStorage
+
+👥 Role-Based Access
+
+- Admin → Task create + assign
+- Member → Task view + complete
+
+📋 Task Management
+
+- Create task
+- Assign to user
+- View tasks
+- Update status (Pending → Completed)
+
+📊 Dashboard
+
+- Personalized dashboard
+- Task list with status
+- Action buttons (Mark Complete)
 
 ---
 
 🛠️ Tech Stack
 
-💻 Frontend
+🎨 Frontend
 
-- ⚛️ React (Vite)
-- 🔀 React Router DOM
-- 📡 Axios
+- React (Vite) ⚡
+- Axios 🌐
+- React Router 🔀
 
-🖥️ Backend
+🧠 Backend
 
-- 🟢 Node.js
-- 🚀 Express.js
-- 🍃 MongoDB (Mongoose)
-- 🔐 JWT Authentication
-
----
-
-⚙️ Features
-
-🔐 Authentication
-
-- User Signup & Login
-- JWT-based authentication
-- Protected routes
-
-📊 Dashboard
-
-- Displays logged-in user name
-- Logout functionality
-- Route protection
-
-📁 Project Management
-
-- Create Project
-- View Projects
-- Update Project
-- Delete Project
-
-📝 Task Management
-
-- Create Tasks inside Projects
-- Update Task status (todo / in-progress / done)
-- Delete Tasks
-- Filter & Search Tasks
+- Node.js 🟢
+- Express.js 🚀
+- MongoDB (Mongoose) 🍃
 
 ---
 
-📂 Folder Structure
+⚙️ Environment Variables
 
-team-task-manager/
-│
-├── backend/
-│   ├── src/
-│   │   ├── controllers/
-│   │   ├── models/
-│   │   ├── routes/
-│   │   └── middleware/
-│   ├── config/
-│   ├── server.js
-│   └── .env
-│
-├── frontend/
-│   ├── src/
-│   │   ├── pages/
-│   │   ├── components/
-│   │   ├── services/
-│   │   └── App.jsx
-│   └── package.json
+📁 Frontend (.env)
 
----
+VITE_API_URL=https://team-task-manager-6k3n.onrender.com
 
-🔑 Environment Variables
+📁 Backend (.env)
 
-Create a ".env" file in the backend folder:
-
-PORT=5000
 MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
 
 ---
 
-🚀 Installation & Setup
+🚀 How to Run Locally
 
-1️⃣ Clone the repository
+🔹 Clone Repository
 
 git clone https://github.com/yuvrajjuv/team-task-manager.git
-cd team-task-manager
 
 ---
 
-2️⃣ Backend Setup
+🔹 Backend Setup
 
 cd backend
 npm install
-npm run dev
+npm start
 
 ---
 
-3️⃣ Frontend Setup
+🔹 Frontend Setup
 
 cd frontend
 npm install
@@ -124,85 +105,43 @@ npm run dev
 
 ---
 
-🌐 Run Application
+🧪 How to Use
 
-- Frontend → http://localhost:5173
-- Backend → http://localhost:5000
-
----
-
-🔒 Protected Routes
-
-- "/dashboard" → accessible only after login
-- Unauthorized users are redirected to login page
+1. Signup as Admin 👨‍💼
+2. Login 🔐
+3. Create task 📝
+4. Assign to user 👤
+5. Login as Member 👨‍💻
+6. View tasks 📋
+7. Mark task as completed ✅
 
 ---
 
-🧪 API Endpoints
+🌍 Deployment
 
-🔐 Auth
-
-- "POST /api/auth/signup"
-- "POST /api/auth/login"
-
-📁 Projects
-
-- "GET /api/projects"
-- "POST /api/projects"
-- "PUT /api/projects/:id"
-- "DELETE /api/projects/:id"
-
-📝 Tasks
-
-- "GET /api/tasks"
-- "POST /api/tasks"
-- "PUT /api/tasks/:id"
-- "DELETE /api/tasks/:id"
+- Frontend deployed on Vercel ▲
+- Backend deployed on Render 🚀
 
 ---
 
-📸 Screenshots
+📸 Demo Video
 
-- 🔑 Login Page
-- 📊 Dashboard
-- 📁 Projects API
-- 📝 Tasks API
-
----
-
-🎯 Future Improvements
-
-- 🎨 UI improvements (Tailwind CSS / Material UI)
-- 👥 Multi-user collaboration
-- 📅 Task deadlines & reminders
-- ☁️ Deployment (Vercel + Render)
+👉 (Will be added soon)
 
 ---
 
 👨‍💻 Author
 
-Yuvraj Malviya
-
-- GitHub: https://github.com/yuvrajjuv
-- LinkedIn: https://www.linkedin.com/in/yuvraj-malviya
+Yuvraj Malviya 🚀
 
 ---
 
-⭐ Support
+🎯 Status
 
-If you like this project, give it a ⭐ on GitHub!
-
----
-
-🏁 Conclusion
-
-This project demonstrates a complete full-stack development workflow, including:
-
-✔ Authentication
-✔ API Integration
-✔ Database Operations
-✔ Protected Frontend Routes
+✅ Fully Functional
+✅ Deployed
+✅ Assignment Ready
 
 ---
 
-🔥 Built with dedication by Yuvraj Malviya 🚀
+🔥 Thank you for checking out this project!
