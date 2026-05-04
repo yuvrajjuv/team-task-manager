@@ -5,28 +5,31 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        { email, password }
+        "https://team-task-manager-6k3n.onrender.com/api/auth/login",
+        {
+          email,
+          password,
+        }
       );
-
-      // token + user save
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
 
       alert("Login Successful ✅");
 
-      navigate("/dashboard");
+      // token save
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("user", JSON.stringify(res.data.user));
 
+      navigate("/dashboard");
     } catch (err) {
-      console.error(err.response?.data || err.message);
-      alert("Login Failed ❌");
+      console.log(err);
+      alert("Login failed ❌");
     }
   };
 
@@ -34,10 +37,10 @@ function Login() {
     <div style={{ textAlign: "center", marginTop: "100px" }}>
       <h1>Login Page</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleLogin}>
         <input
           type="email"
-          placeholder="Email"
+          placeholder="Enter Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -45,7 +48,7 @@ function Login() {
 
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Enter Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
