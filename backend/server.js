@@ -1,38 +1,47 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const dotenv = require("dotenv");
 const cors = require("cors");
-
-dotenv.config();
+require("dotenv").config();
 
 const app = express();
 
-// ✅ Middlewares
-app.use(express.json());
+// ===== MIDDLEWARE =====
 app.use(cors());
+app.use(express.json());
 
-// ✅ Root route (IMPORTANT for Railway test)
+// ===== ROOT ROUTE (VERY IMPORTANT FOR RAILWAY) =====
 app.get("/", (req, res) => {
-  res.send("API is running 🚀");
+  res.send("Server is running 🚀");
 });
 
-// ✅ Sample test route
-app.get("/test", (req, res) => {
-  res.json({ message: "Backend working ✅" });
+// ===== SAMPLE ROUTE (test ke liye) =====
+app.get("/api/test", (req, res) => {
+  res.json({ message: "API working ✅" });
 });
 
-// ✅ MongoDB Connection
+// ===== DATABASE CONNECTION =====
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected ✅"))
+  .then(() => {
+    console.log("MongoDB Connected ✅");
+  })
   .catch((err) => {
-    console.log("MongoDB Error ❌:", err);
+    console.log("MongoDB Error ❌", err);
   });
 
-// ✅ PORT FIX (Railway ke liye MOST IMPORTANT)
+// ===== YOUR ROUTES (agar hai to uncomment karo) =====
+// const taskRoutes = require("./routes/taskRoutes");
+// app.use("/api/tasks", taskRoutes);
+
+// ===== ERROR HANDLER =====
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: "Something went wrong" });
+});
+
+// ===== SERVER START =====
 const PORT = process.env.PORT || 3000;
 
-// ✅ Server start
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT} 🚀`);
 });
